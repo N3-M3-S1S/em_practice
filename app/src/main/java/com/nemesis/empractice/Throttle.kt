@@ -16,36 +16,30 @@ import kotlin.time.TimeSource
 fun <T> Flow<T>.throttleFirst(
     window: Duration,
     timeSource: TimeSource.WithComparableMarks = TimeSource.Monotonic
-): Flow<T> {
-    return flow {
-        var lastEmitTime: ComparableTimeMark? = null
-        collect { value ->
-            val now = timeSource.markNow()
-            if (lastEmitTime == null || now - lastEmitTime!! > window) {
-                lastEmitTime = now
-                emit(value)
-            }
+): Flow<T> = flow {
+    var lastEmitTime: ComparableTimeMark? = null
+    collect { value ->
+        val now = timeSource.markNow()
+        if (lastEmitTime == null || now - lastEmitTime!! > window) {
+            lastEmitTime = now
+            emit(value)
         }
     }
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
-fun <T> Flow<T>.throttleLatest(window: Duration): Flow<T> {
-    return channelFlow {
-        val latestEmittedValue = produce(capacity = Channel.CONFLATED) {
-            collect { value ->
-                send(value)
-            }
+fun <T> Flow<T>.throttleLatest(window: Duration): Flow<T> = channelFlow {
+    val latestEmittedValue = produce(capacity = Channel.CONFLATED) {
+        collect { value ->
+            send(value)
         }
+    }
 
-        launch {
-            latestEmittedValue.consumeEach { value ->
-                send(value)
-                delay(window)
-            }
+    launch {
+        latestEmittedValue.consumeEach { value ->
+            send(value)
+            delay(window)
         }
     }
 }
-
-
 

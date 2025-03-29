@@ -40,7 +40,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -51,6 +50,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.rxandroid)
     implementation(libs.rxjava)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.fragment)
     testImplementation(libs.junit)
     testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.androidx.junit)

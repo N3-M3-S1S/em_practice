@@ -2,8 +2,7 @@ package com.nemesis.empractice
 
 import android.app.Application
 
-class App(private val appStartLogger: AppStartLogger = AppStartLoggerImpl()) : Application(),
-    AppStartLogger by appStartLogger {
+class App : Application(), AppStartLogger by AppStartLoggerImpl() {
 
     override fun onCreate() {
         super.onCreate()

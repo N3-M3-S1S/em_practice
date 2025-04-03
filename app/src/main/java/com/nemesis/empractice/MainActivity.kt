@@ -1,12 +1,15 @@
 package com.nemesis.empractice
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 
-class MainActivity : ComponentActivity(R.layout.main) {
+class MainActivity : FragmentActivity(R.layout.main) {
+    lateinit var router: Router
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        router = Router(supportFragmentManager, R.id.fragmentContainer)
     }
 
 }

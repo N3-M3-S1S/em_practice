@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "EMpractice"
 include(":app")
- 
+include(":core")
+include(":feature_home")

@@ -29,9 +29,12 @@ class FlowerShopServiceImpl(private val database: FlowerShopDatabase) : FlowerSh
                 val flowersFromBouquet =
                     bouquetsDao.getFlowersFromBouquetPojos(bouquetEntity.id)
                         .associate { flowerFromBouquetPojo ->
-                            Flower(flowerFromBouquetPojo.name) to flowerFromBouquetPojo.amountInBouquet
+                            Flower(
+                                name = flowerFromBouquetPojo.name,
+                                country = flowerFromBouquetPojo.country
+                            ) to flowerFromBouquetPojo.amountInBouquet
                         }
-                Bouquet(flowers = flowersFromBouquet)
+                Bouquet(flowers = flowersFromBouquet, decorations = bouquetEntity.decorations)
             }
         }
     }

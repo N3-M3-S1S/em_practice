@@ -3,6 +3,8 @@ package com.nemesis.empractice.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.TypeConverters
+import com.nemesis.empractice.data.converter.BouquetDecorationsConverter
 import com.nemesis.empractice.data.entity.BouquetEntity
 import com.nemesis.empractice.data.entity.BouquetFlowerJunctionEntity
 import com.nemesis.empractice.data.entity.FlowerFromBouquetPojo
@@ -22,7 +24,7 @@ abstract class BouquetsDao {
 
     @Query(
         """
-        SELECT name, BouquetFlowerJunctionEntity.flowerAmount as amountInBouquet from FlowerEntity
+        SELECT name, country, BouquetFlowerJunctionEntity.flowerAmount as amountInBouquet from FlowerEntity
         JOIN BouquetFlowerJunctionEntity on FlowerEntity.id = BouquetFlowerJunctionEntity.flowerId
         WHERE BouquetFlowerJunctionEntity.bouquetId = :bouquetId
         """

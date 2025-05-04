@@ -1,3 +1,3 @@
 package com.nemesis.empractice.domain
 
-data class Flower(val name: String)
+data class Flower(val name: String, val country: String)

@@ -8,6 +8,7 @@ import androidx.compose.ui.util.fastFilter
 import androidx.compose.ui.util.fastJoinToString
 import androidx.lifecycle.lifecycleScope
 import com.nemesis.empractice.domain.Bouquet
+import com.nemesis.empractice.domain.BouquetDecoration
 import com.nemesis.empractice.domain.Flower
 import com.nemesis.empractice.domain.FlowerData
 import kotlinx.coroutines.flow.filter
@@ -93,7 +94,7 @@ class MainActivity : ComponentActivity(R.layout.main) {
         val createEmptyBouquet = Random.nextFloat() < invalidBouquetChance
         if (createEmptyBouquet) {
             Log.d(LOG_TAG, "Creating empty bouquet")
-            return Bouquet(flowers = emptyMap())
+            return Bouquet(flowers = emptyMap(), decorations = emptySet())
         }
 
         var randomFlowers = flowersData
@@ -114,10 +115,17 @@ class MainActivity : ComponentActivity(R.layout.main) {
         if (addNonExistentFlower) {
             Log.d(LOG_TAG, "Adding non existent flower to bouquet")
             randomFlowers = randomFlowers.toMutableMap().also {
-                it[Flower("NonExistentFlower")] = 1
+                it[Flower(name = "NonExistentFlower", country = "")] = 1
             }
         }
 
-        return Bouquet(flowers = randomFlowers)
+        val decorations = enumValues<BouquetDecoration>()
+        decorations.shuffle()
+
+        val randomDecorations = decorations
+            .take(Random.nextInt(0, decorations.size + 1))
+            .toSet()
+
+        return Bouquet(flowers = randomFlowers, decorations = randomDecorations)
     }
 }
